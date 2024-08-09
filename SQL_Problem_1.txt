@@ -1,0 +1,220 @@
+Create database  Library Management;
+use  Library Management;
+
+
+-----------> Create table books <-----------------
+
+Create table books (book_id int Primary key ,
+                    title varchar(20) ,
+	            Author_id int,
+	            publiction_year date ,
+	            genre varchar(20),
+	            isbn int ,
+	            available copies int
+	);
+    
+
+---------> Create table Authors <-------------
+
+Create table Authors (Author_id int,
+	              first_name varchar(20) ,
+	              last_name varchar(20),
+	              date_of_birth date ,
+	              nationality varchar(20)
+	);
+
+---------> Create table Members <-------------
+
+Create table Members (member_id int primary key,
+	              first_name varchar(20) ,
+	              last_name varchar(20),
+	              date_of_birth date ,
+	              contact_number varchar(20),
+                      email varchar(20),
+	              membership_date date 
+	);
+
+
+---------> Create table Loans <-------------
+
+Create table Loans (loan_id int primary key,
+	            book_id int ,
+	            member_id int,
+	            loan_date date ,
+	            return_date date,
+	            actual_return_date date
+	);
+
+---------> Create table staff <-------------
+
+Create table staff (staff_id int Primary key ,
+                    first_name varchar(20) ,
+	            last_name varchar(20),
+	            positionn varchar(20) ,
+	            contact_number varchar(20),
+	            email varchar(20) ,
+	            hire_date date
+	);
+
+---------> Insert Values in books <-------------
+
+insert into books values ( 101 ,'The Dark' , 201 , '10/01/2001' , 'Horror' , 1234 , 120),
+( 102 ,'That Person' , 202 , '12/09/2001' , 'Non-Friction' , 2234 , 150),
+( 103 ,'Mr. Bean' , 203 , '23/01/1996' , 'Comedy' , 3234 , 400);
+
+---------> Insert Values in Authors <-------------
+
+insert into authors values (201 , 'Akhil' , 'Maurya' , '10/01/2001','Indian'),
+(202 , 'Ruksarbee' , 'Shaikh' , '12/08/2001' , 'Indian'),
+(203 , 'Aditya' , 'Shukla' , '20/01/2003' , 'America');
+
+---------> Insert Values in Members <-------------
+
+insert into members values(301 , 'Shubham' , 'Sharma' , '27/04/2002', '7654321865' , 'shubh@gmail.com','12/12/2024'),
+(302 , 'Smit' , 'Patel' , '22/07/2001', '9876546789' , 'smit@gmail.com','19/09/2024'),
+(303 , 'Kuldeep' , 'Vishwakarma' , '21/03/2003', '9234432186' , 'kd@gmail.com','23/2/2027')
+
+---------> Insert Values in Loans <-------------
+
+insert into loans values (401 , 101 , 301 , '12/09/2022' , '12/09/2023' , '12/10/2023'),
+(402 , 102 , 302 , '21/07/2023' , '21/07/2024' , '21/08/2024'),
+(403 , 103 , 303 , '19/09/2022' , '19/09/2024' , '19/10/2024')
+
+---------> Insert Values in staff <-------------
+
+insert into staff values (501 , 'Suraj' , 'Shinde' , 'Manager' , '8234576543','suraj@gmail.com' , '12/12/2023'),
+(502 , 'Nikhil' , 'Singh' , 'Assistant manager' , '9734236543','nik@gmail.com' , '23/09/2022'),
+(503 , 'Nilodh' , 'pan' , 'labour' , '92234545543','ll@gmail.com' , '06/08/2024')
+
+
+
+<----------------------------------------------------------------------------------------------------------------------------->
+
+<---DDL Queries--->
+
+1. Add a new column to the books table:
+
+alter table books
+add column MRP int;
+
+2.Rename the position column in the staff table to job_title:
+
+alter table staff
+rename column positionn to job_title;
+
+3. drop the email column from the members table:
+
+alter table members
+drop email
+
+<----DML Queries----->
+
+1. Insert new data into the books table:
+
+insert into books values ( 104 ,'School' , 204 , 2002 , 'Comedy' , 4234 , 340 , 799);
+
+
+2. Update a member's contact number:
+
+update members
+set contact_number = '7738531993'
+where member_id = 303;
+
+
+3. Delete a specific loan record:
+
+delete from loans
+where loan_id = 402;
+
+
+4. Insert a new loan record:
+
+insert into loans values (404 , 104 , 304 , '22/04/2023' , '22/04/2024' , '22/05/2024')
+
+
+<---------------------------------------------------------- Join Queries --------------------------------------------------------------------->
+1. Retrieve all books along with their authors:
+
+select books.title , authors.first_name , authors.last_name 
+from books 
+left join authors  
+on books.author_id = authors.author_id;
+
+
+2. Find all books currently on loan along with member details:
+
+select l.loan_id , b.title , m.first_name , m.last_name
+from loans as l
+inner join books as b
+on l.book_id = b.book_id
+inner join members as m
+on m.member_id = l.member_id;
+
+
+
+3. List all books borrowed by a specific member:
+
+
+
+
+
+
+4. Get the total number of books and the total available copies for each genre:
+
+<---- for Comedy ---->
+SELECT COUNT(book_id)
+FROM books
+WHERE genre = 'Comedy';
+
+
+<---- for Horror ---->
+SELECT COUNT(book_id)
+FROM books
+WHERE genre = 'Horror';
+
+
+<---- for Non-Friction ---->
+SELECT COUNT(book_id)
+FROM books
+WHERE genre = 'Non-Friction';
+
+
+
+
+
+
+
+5. Find all staff members who are librarians and their hire dates:
+
+Select first_name , last_name , hire_date
+from staff
+where job_title = 'librarians'
+
+
+<---------------- to make unique ----------------->
+
+alter table books
+add unique (author_id)
+
+
+
+
+
+
+
+<--------------------------------------
+
+alter table books
+add primary key (book_id)
+
+alter table books
+add unique (book_id)
+
+
+alter table book
+add foregin key (authore_id) refreren auther(auther_id)
+
+
+
+
+
